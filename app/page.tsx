@@ -82,82 +82,82 @@ const Login = () => {
   };
 
   return (
-    <div className='w-full'>
-      <div className="flex justify-center items-start max-w-[50vw] mx-auto bg-transparent h-[100vh] mb-[50px]">
-        <div className="flex flex-col justify-center items-center gap-[16px] mt-[5rem] w-[30vw]">
-          <Image src={UIButterLogo} alt="uiButter" className='h-[50px] w-[150px]' />
+   <div className="w-full min-h-screen flex justify-center items-start bg-transparent py-10 px-4">
+    <div className="flex flex-col justify-center items-center gap-6 w-full max-w-md">
+      <Image src={UIButterLogo} alt="uiButter" className="h-12 w-auto" />
 
-          <div className="flex flex-col justify-center items-center mt-[40px] gap-[15px]">
-            <h2 className='text-[22px] font-semibold leading-[35px]'>Welcome back</h2>
+      <div className="flex flex-col justify-center items-center mt-6 gap-3 text-center">
+        <h2 className="text-2xl font-semibold leading-8">Welcome back</h2>
+      </div>
+
+      <form
+        onSubmit={handleSubmit}
+        className="flex flex-col justify-center items-center gap-6 w-full"
+      >
+        <div className="bg-transparent relative rounded-lg flex flex-col gap-6 w-full py-4 text-sm">
+          <div className="flex flex-col gap-2 w-full">
+            <Label htmlFor="email">Email</Label>
+            <Input
+              type="email"
+              id="email"
+              placeholder="Enter your email address"
+              className="h-12 w-full"
+              onChange={handleEmailChange}
+            />
+            {emailValidation && (
+              <p
+                className={`flex items-center gap-2 text-sm mt-2 ${
+                  emailValidation.valid ? "text-green-600" : "text-red-600"
+                }`}
+              >
+                {emailValidation.valid ? <ThumbsUp size={16} /> : <SadFace size={16} />}
+                {emailValidation.message}
+              </p>
+            )}
           </div>
 
-          <form onSubmit={handleSubmit} className="flex flex-col justify-center items-center gap-6 sm:w-full md:w-full lg:w-full">
-            <div className="bg-transparent relative rounded-[16px] flex flex-col gap-6 items-center sm:w-full md:w-full lg:w-full py-[14px] text-sm">
-              <div className="items-center gap-3 sm:w-full md:w-full lg:w-full">
-                <Label htmlFor="email">Email</Label>
-                <Input
-                  type="email"
-                  id="email"
-                  placeholder="Enter your email address"
-                  className="h-[50px] mt-[5px] sm:w-full md:w-full lg:w-full"
-                  onChange={handleEmailChange}
-                />
-                {emailValidation && (
-                  <p
-                    className={`flex items-center gap-2 text-sm mt-[10px] ${
-                      emailValidation.valid ? "text-green-600" : "text-red-600"
-                    }`}
-                  >
-                    {emailValidation.valid ? <ThumbsUp size={16} /> : <SadFace size={16} />}
-                    {emailValidation.message}
-                  </p>
-                )}
-              </div>
-              <div className="sm:w-full md:w-full lg:w-full items-center gap-3">
-                <Label htmlFor="password">Password</Label>
-                 <div className="relative">
-                  <Input
-                    type={showPassword ? "text" : "password"}
-                    id="password"
-                    placeholder="*****"
-                    className="h-[50px] sm:w-full md:w-full lg:w-full"
-                    onChange={handlePasswordChange}
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500"
-                  >
-                    {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
-                  </button>
-                </div>
-                {passwordValidation && (
-                  <p
-                    className={`flex items-center gap-2 text-sm mt-[10px] ${
-                      passwordValidation.valid ? "text-green-600" : "text-red-600"
-                    }`}
-                  >
-                    {passwordValidation.valid ? <ThumbsUp size={16} /> : <SadFace size={16} />}
-                    {passwordValidation.message}
-                  </p>
-                )}
-              </div>
-
+          <div className="flex flex-col gap-2 w-full">
+            <Label htmlFor="password">Password</Label>
+            <div className="relative">
+              <Input
+                type={showPassword ? "text" : "password"}
+                id="password"
+                placeholder="*****"
+                className="h-12 w-full"
+                onChange={handlePasswordChange}
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500"
+              >
+                {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+              </button>
             </div>
-
-            <Button
-              type="submit"
-              className="flex justify-center items-center gap-3 sm:w-full md:w-full lg:w-full h-[50px] border border-[#7800C2] bg-[#7800C2] px-[16px] py-[10px] rounded-xl cursor-pointer text-white hover:bg-white hover:text-[#7800C2]"
-            >
-              <span className='font-semibold text-[18px] leading-[100%]'>Sign In</span>
-              <span>
-                <MdOutlineArrowRightAlt className="h-6 w-6" />
-              </span>
-            </Button>
-          </form>
+            {passwordValidation && (
+              <p
+                className={`flex items-center gap-2 text-sm mt-2 ${
+                  passwordValidation.valid ? "text-green-600" : "text-red-600"
+                }`}
+              >
+                {passwordValidation.valid ? <ThumbsUp size={16} /> : <SadFace size={16} />}
+                {passwordValidation.message}
+              </p>
+            )}
+          </div>
         </div>
-      </div>
+
+        <Button
+          type="submit"
+          className="flex justify-center items-center gap-3 w-full h-12 border border-[#7800C2] bg-[#7800C2] rounded-lg text-white hover:bg-white hover:text-[#7800C2]"
+        >
+          <span className="font-semibold text-lg">Sign In</span>
+          <MdOutlineArrowRightAlt className="h-6 w-6" />
+        </Button>
+      </form>
     </div>
+  </div>
+
   )
 }
 
