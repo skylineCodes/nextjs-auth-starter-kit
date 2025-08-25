@@ -10,8 +10,8 @@ import { Input } from "@/components/ui/input"
 import { Button } from '@/components/ui/button';
 import { MdOutlineArrowRightAlt } from 'react-icons/md';
 import { Eye, EyeOff, ThumbsUp } from "lucide-react";
-import SadFace from '../../../assets/icons/sad-face.svg';
-import UIButterLogo from '../../../assets/images/uiButterLogo.png';
+import SadFace from '../assets/icons/sad-face.svg';
+import UIButterLogo from '../assets/images/uiButterLogo.png';
 
 const emailSchema = z.string().email({ message: "Your email doesn't look right" });
 const passwordSchema = z.string().min(1, { message: "Please enter your password" });
