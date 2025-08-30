@@ -39,7 +39,7 @@ export const RouteSelect = () => {
               href={route.href}
               title={route.title}
               Icon={route.Icon}
-              selected={pathname === route.href}
+              // selected={pathname === route.href}
             />
           ))}
         </div>
@@ -57,7 +57,7 @@ export const RouteSelect = () => {
               href={route.href}
               title={route.title}
               Icon={route.Icon}
-              selected={pathname === route.href}
+              // selected={pathname === route.href}
             />
           ))}
         </div>
@@ -67,16 +67,19 @@ export const RouteSelect = () => {
 };
 
 const Route = ({
-  selected,
+  // selected,
   Icon,
   title,
   href,
 }: {
-  selected: boolean;
+  // selected: boolean;
   Icon: any;
   title: string;
   href: string;
 }) => {
+  const pathname = usePathname();
+  const selected = pathname.startsWith(href);
+
   return (
     <Link
       href={href}

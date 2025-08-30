@@ -6,7 +6,7 @@ import Account from './Account'
 const Sidebar = () => {
   return (
     <div className="">
-      <div className='overflow-y-scroll sticky top-0 h-[calc(100vh-32px-48px)]'>
+      <div className='sticky top-0 h-[calc(100vh-32px-48px)]'>
         <AccountToggle />
         <RouteSelect />
       </div>
