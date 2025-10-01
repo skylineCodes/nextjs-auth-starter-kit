@@ -1,6 +1,9 @@
+"use client";
+
 import Image from "next/image";
 import React from "react";
 import Link from "next/link";
+import { toast } from "sonner";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -14,12 +17,35 @@ import {
   DropdownMenuTrigger,
   DropdownMenuPortal,
 } from "@/components/ui/dropdown-menu";
+import { useRouter } from "next/navigation";
 import { FiMoreVertical } from "react-icons/fi";
 
 const Account = () => {
+  const router = useRouter();
+  
+  const handleLogout = async (logoutAll: boolean = false) => {
+    try {
+      const res = await fetch("/api/auth/logout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", },
+        body: JSON.stringify(logoutAll),
+      });
+
+      if (res.status === 200) {
+        // ⏩ Redirect user to login page
+        router.push("/login");
+      } else {
+        console.error("Logout failed", await res.text());
+        toast.error('Logout failed. Please try again.');
+      }
+    } catch (err) {
+      console.log('err', err);
+      console.error("Logout error:", err);
+    }
+  };
+
   return (
     <div className="flex items-center sticky bottom-0 top-[calc(100vh_-_48px_-_16px)] h-12 border-t px-2 pt-4 border-stone-300 justify-between text-xs w-full">
-      
       {/* DropdownMenu with full username/avatar as trigger */}
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
@@ -48,39 +74,14 @@ const Account = () => {
         </DropdownMenuTrigger>
 
         <DropdownMenuContent className="w-56" align="start">
-          <DropdownMenuLabel>My Account</DropdownMenuLabel>
-          <DropdownMenuGroup>
-            <DropdownMenuItem asChild>
-              <Link href="/profile">Profile</Link>
-            </DropdownMenuItem>
-            <DropdownMenuItem>Billing</DropdownMenuItem>
-            <DropdownMenuItem>Settings</DropdownMenuItem>
-          </DropdownMenuGroup>
-
           <DropdownMenuSeparator />
-
-          <DropdownMenuGroup>
-            <DropdownMenuItem>Team</DropdownMenuItem>
-            <DropdownMenuSub>
-              <DropdownMenuSubTrigger>Invite users</DropdownMenuSubTrigger>
-              <DropdownMenuPortal>
-                <DropdownMenuSubContent>
-                  <DropdownMenuItem>Email</DropdownMenuItem>
-                  <DropdownMenuItem>Message</DropdownMenuItem>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem>More...</DropdownMenuItem>
-                </DropdownMenuSubContent>
-              </DropdownMenuPortal>
-            </DropdownMenuSub>
-          </DropdownMenuGroup>
-
-          <DropdownMenuSeparator />
-          <DropdownMenuItem asChild>
-            <Link href="https://github.com">GitHub</Link>
+          {/* Logout options */}
+          <DropdownMenuItem className="cursor-pointer" onClick={() => handleLogout(false)}>
+            Logout (this session)
           </DropdownMenuItem>
-          <DropdownMenuItem>Support</DropdownMenuItem>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem>Logout</DropdownMenuItem>
+          <DropdownMenuItem className="cursor-pointer" onClick={() => handleLogout(true)}>
+            Logout (all sessions)
+          </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
     </div>

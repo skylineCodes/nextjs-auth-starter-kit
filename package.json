@@ -37,7 +37,7 @@
     "@radix-ui/react-toggle-group": "^1.1.2",
     "@radix-ui/react-tooltip": "^1.1.8",
     "@sagold/react-json-editor": "^0.36.0",
-    "@tanstack/react-query": "^5.74.4",
+    "@tanstack/react-query": "^5.90.2",
     "@tanstack/react-query-devtools": "^5.74.4",
     "axios": "^1.8.4",
     "class-variance-authority": "^0.7.1",
@@ -46,6 +46,7 @@
     "date-fns": "^4.1.0",
     "embla-carousel-react": "^8.5.2",
     "input-otp": "^1.4.2",
+    "js-cookie": "^3.0.5",
     "json-edit-react": "^1.28.2",
     "lucide-react": "^0.484.0",
     "next": "15.2.4",
@@ -65,17 +66,23 @@
     "tw-animate-css": "^1.2.4",
     "vaul": "^1.1.2",
     "zod": "^3.24.2",
-    "zustand": "^5.0.3"
+    "zustand": "^5.0.3",
+    "zxcvbn": "^4.4.2"
   },
   "devDependencies": {
     "@svgr/webpack": "^8.1.0",
     "@tailwindcss/postcss": "^4.0.17",
+    "@types/js-cookie": "^3.0.6",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@types/zxcvbn": "^4.4.5",
     "autoprefixer": "^10.4.21",
     "postcss": "^8.5.3",
     "tailwindcss": "^4.0.17",
     "typescript": "^5"
+  },
+  "resolutions": {
+    "@next/swc-darwin-arm64": "npm:@next/swc-wasm-nodejs"
   }
 }
