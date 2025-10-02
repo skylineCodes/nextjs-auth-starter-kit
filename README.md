@@ -58,7 +58,7 @@ Authentication is powered by **JWTs (JSON Web Tokens)** and a **refresh token st
 
 ## 👀 Login Tracking + Anomaly Detection
 
-![Recent Login Activity Screenshot](https://firebasestorage.googleapis.com/v0/b/mizright-3949d.appspot.com/o/images%2Frecent-logins.png?alt=media&token=e9528db7-0e2a-488b-9046-2f24c3241f41)
+![Recent Login Activity Screenshot](https://firebasestorage.googleapis.com/v0/b/mizright-3949d.appspot.com/o/images%2Frecent-logins.png?alt=media&token=fc4d4ca6-3c55-433b-b5ec-87713e467028)
 
 Modern apps don’t just authenticate — they **track login behavior** to spot unusual activity and keep accounts safe.  
 This module demonstrates how recent logins can be surfaced to the user and how anomalies can be flagged.

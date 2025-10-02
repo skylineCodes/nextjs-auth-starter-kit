@@ -48,7 +48,7 @@ const RecentLoginsDataTable = () => {
 
   // 🔑 Pagination states
   const [page, setPage] = useState(1)
-  const [pageSize, setPageSize] = useState(20);
+  const [pageSize, setPageSize] = useState(10);
 
   const fetchWithRefresh = async (url: string) => {
     let res = await fetch(url, { credentials: "include" }); // include cookies

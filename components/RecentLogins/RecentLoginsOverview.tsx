@@ -1,6 +1,4 @@
-import React from 'react'
-import CustomButton from '../CustomButton';
-import { FaPlus, FaTags, FaUpload } from 'react-icons/fa6';
+import React from 'react';
 import RecentLoginsDataTable from './RecentLoginsDataTable';
 
 const RecentLoginsOverview = () => {
