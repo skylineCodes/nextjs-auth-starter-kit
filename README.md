@@ -1,36 +1,265 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-## Getting Started
+# 🔐 Auth Kit Frontend (Next.js + Tailwind)
 
-First, run the development server:
+A production-ready **frontend integration for authentication flows**.
+Built with **Next.js, TailwindCSS, and ShadCN UI,** it demonstrates secure practices like JWT sessions, refresh tokens, device management, and anomaly detection — the features you’d expect in a modern SaaS platform.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## 🚀 Features
+
+### 🔑 Sign Up Page
+- Email, username, password input  
+- Auto-login or redirect to Sign In  
+
+### 🔓 Sign In Page
+- Standard login form with error handling (wrong credentials, locked account, etc.)  
+
+### 🛡️ Session + JWT Auth
+- Secure token storage (httpOnly cookie or memory + refresh token flow)  
+- Protected routes (e.g. `/dashboard`)  
+
+### 👀 Login Tracking + Anomaly Detection
+- “Recent Login Activity” dashboard (device, IP, location)  
+- Simulated anomaly alerts  
+
+### 💻 Multi-Device Session Management
+- “Manage Devices” page  
+- List active sessions with revoke option  
+
+### 🔄 Forgot Password Flow
+- Request reset via email  
+- Secure token reset → update password  
+
+### ♻️ Refresh Token Strategy
+- Silent refresh behind the scenes  
+- Keeps user logged in even when tokens expire  
+
+---
+
+## 🛡️ Session + JWT Auth
+
+![Session and JWT Auth Screenshot](./screenshots/session-auth.png)
+
+Authentication is powered by **JWTs (JSON Web Tokens)** and a **refresh token strategy** to ensure both security and usability.
+
+### 🔍 How It Works
+- **Secure Token Storage** → Access tokens are stored in **httpOnly cookies** to prevent XSS leaks.  
+- **Refresh Tokens** → A background refresh flow silently re-issues new access tokens before expiry, keeping users logged in seamlessly.  
+- **Protected Routes** → Pages like `/dashboard` are gated behind authentication middleware. If a user is not logged in, they are redirected to the Sign In page.  
+
+### ⚙️ Implementation Details
+- **Next.js Middleware** is used to check authentication status on protected routes.  
+- **API proxy routes** (e.g., `/api/auth/*`) handle secure token forwarding to the backend.  
+- **Auto-refresh logic** is implemented using interceptors (e.g., Axios or fetch wrapper) to retry failed requests when a token is expired.  
+- **Logout** clears both access and refresh tokens across all devices.  
+
+---
+
+## 👀 Login Tracking + Anomaly Detection
+
+![Recent Login Activity Screenshot](./screenshots/recent-logins.png)
+
+Modern apps don’t just authenticate — they **track login behavior** to spot unusual activity and keep accounts safe.  
+This module demonstrates how recent logins can be surfaced to the user and how anomalies can be flagged.
+
+### 🔍 How It Works
+- **Recent Login Activity** → Displays a list of the most recent login attempts, including:
+  - Device type (desktop, mobile, browser)  
+  - IP address  
+  - Geo-location (simulated for demo purposes)  
+  - Timestamp of login  
+- **Anomaly Detection** → Simulated logic flags:
+  - Logins from unfamiliar devices  
+  - Logins from suspicious IP ranges  
+  - Multiple failed login attempts in a short period  
+
+### ⚙️ Implementation Details
+- **Backend** → Each login request is logged with metadata (IP, device, timestamp).  
+- **Frontend Dashboard** → Data is pulled into a “Recent Logins” table for visibility.  
+- **Anomaly Alerts** → UI highlights suspicious logins (e.g., “⚠️ Login from new device”).  
+- **Extensible** → Could integrate with services like MaxMind GeoIP or custom ML models for production anomaly detection.  
+
+---
+
+## 💻 Multi-Device Session Management
+
+![Manage Devices Screenshot](./screenshots/manage-devices.png)
+
+In real-world apps, users often log in across multiple devices — desktop, mobile, and tablets.  
+This feature allows users to **see all active sessions** tied to their account and **take control** by revoking access when needed.
+
+### 🔍 How It Works
+- **Manage Devices Page** → Central hub for monitoring all active sessions.  
+- **Active Session List** → Shows:
+  - Device/browser type  
+  - IP address  
+  - Last active timestamp  
+- **Revoke Access** → Each session row has a “Revoke” button, allowing users to log out devices remotely.  
+
+### ⚙️ Implementation Details
+- **Session Metadata** → Stored in the backend during login (device, IP, issuedAt).  
+- **API Endpoint** → `/sessions` endpoint returns all active sessions for the logged-in user.  
+- **Frontend Integration** → Next.js page renders the sessions in a table, with revoke actions per session.  
+- **Revoke Flow** → Calling the revoke endpoint invalidates the refresh token for that device, forcing re-authentication.  
+- **Security UX** → Useful after password changes, or if an anomaly is detected in the login activity panel.  
+
+---
+
+## 🔄 Forgot Password Flow
+
+![Forgot Password Screenshot](./screenshots/forgot-password.png)
+
+Password recovery is a **core feature** of any authentication system.  
+This flow ensures users can safely reset their credentials without compromising security.
+
+### 🔍 How It Works
+- **Request Reset** → User enters their email on the “Forgot Password” page.  
+- **Email Delivery** → Backend sends a one-time reset token (simulated in this demo).  
+- **OTP Code** → User receives an OTP code in their email.
+- **Password Update** → If the token is valid, the password is securely updated.  
+- **Rate Limiting** → Each email can only request **5 reset tokens per hour**.  
+  - After 5 attempts, the user must wait 1 hour before requesting again.  
+  - Helps prevent abuse and spam attacks.  
+
+### ⚙️ Implementation Details
+- **Reset Tokens** → Time-limited, single-use tokens generated and stored by the backend.  
+- **Request Window** → A counter is tracked per email; requests beyond 5 in an hour are blocked.  
+- **Frontend Flow** → Two-step process:
+  1. Submit email → request reset  
+  2. Enter new password → verify token + update  
+- **Validation** → Includes checks for token expiry, password strength, and rate-limiting feedback.  
+- **User Experience** → Friendly feedback messages (“Check your email”, “Password updated successfully”, or “Too many attempts, try again in 1 hour”).
+
+---
+
+## ♻️ Refresh Token Strategy
+
+![Refresh Token Flow Screenshot](./screenshots/refresh-token.png)
+
+To provide a seamless experience, this project implements a **refresh token strategy**.  
+It ensures users stay logged in without frequent interruptions while still maintaining strong security practices.
+
+### 🔍 How It Works
+- **Silent Refresh** → When an access token expires, the frontend automatically requests a new one using a refresh token.  
+- **Behind the Scenes** → This process happens in the background, so the user does not notice any disruption.  
+- **Session Continuity** → Users remain authenticated as long as their refresh token is valid.  
+- **Auto Logout** → If the refresh token is expired or revoked, the user is logged out and redirected to Sign In.  
+
+### ⚙️ Implementation Details
+- **Access Token Lifetime** → Short-lived (e.g., 15 minutes) for security.  
+- **Refresh Token Lifetime** → Longer-lived (e.g., 7 days) and tied to a specific device/session.  
+- **Interceptor Logic** → A fetch interceptor catches `401 Unauthorized` responses, attempts a silent refresh, and retries the original request.  
+- **Security Considerations** →  
+  - Refresh tokens stored securely (httpOnly cookies).  
+  - Invalidated immediately if the session is revoked (via Manage Devices).  
+  - Protects against replay attacks by rotating refresh tokens on each use.  
+
+---
+
+## 🔁 API Proxy Routes
+
+![API Proxy Routes Screenshot](./screenshots/api-proxy.png)
+
+Instead of calling the backend API directly from the frontend, all authentication-related requests are routed through **Next.js API routes**.  
+This adds an extra layer of security and flexibility when handling sensitive operations.
+
+### 🔍 How It Works
+- **Proxy Authentication Calls** → Sign In, Sign Up, Refresh, and Logout requests are forwarded via `/api/auth/*` endpoints in Next.js.  
+- **Hidden Backend URL** → The frontend never exposes the actual backend Auth Kit URL, keeping infrastructure details private.  
+- **Unified Error Handling** → Errors from the backend are normalized in the proxy before reaching the frontend.  
+
+### ⚙️ Implementation Details
+- **Next.js API Routes** → Act as a middle layer between frontend and backend.  
+- **Cookie Handling** → Tokens (httpOnly cookies) are set and cleared at the proxy layer.  
+- **Extensibility** → Developers can easily plug in:
+  - Request logging  
+  - Caching strategies  
+  - Middleware (e.g., rate limiting, audit logs)  
+
+---
+
+## ⚡ Next.js Middleware for Route Protection
+
+![Route Protection Screenshot](./screenshots/route-protection.png)
+
+Protecting sensitive pages is a critical part of any authentication system.  
+This project uses **Next.js Middleware** to enforce route-level security, ensuring only authenticated users can access restricted areas.
+
+### 🔍 How It Works
+- **Middleware Interception** → Runs before every request to protected routes (e.g., `/dashboard`).  
+- **Auth Check** → Verifies the presence and validity of the user’s session.  
+- **Redirection** → Unauthenticated users are redirected to the Sign In page automatically.  
+- **Seamless Experience** → Authenticated users proceed to the requested page without delay.  
+
+### ⚙️ Implementation Details
+- **`middleware.ts`** → Defines logic for matching protected routes and validating tokens.  
+- **Pattern Matching** → Applies protection selectively (e.g., `/dashboard/*` but not `/auth/*`).  
+- **Token Verification** → Uses the access token or session cookie provided by the Auth Kit backend.  
+- **Customizable** → Developers can extend logic for role-based access (e.g., admin vs. user).  
+
+---
+
+## ⚡️ Tech Stack
+
+This project is built with a modern, production-ready stack optimized for both **developer experience** and **security**:
+
+- **[Next.js](https://nextjs.org/)** — React-based frontend framework with SSR and API routes  
+- **[Tailwind CSS](https://tailwindcss.com/)** — Utility-first CSS framework for rapid styling  
+- **[ShadCN/UI](https://ui.shadcn.com/)** — Accessible, customizable component library  
+- **[Auth Kit API (NestJS)](https://github.com/skylineCodes/nestjs-auth-starter-kit)** — Backend authentication API providing session, JWT, and device management  
+
+---
+
+## 🛠️ Getting Started
+
+Follow these steps to set up the project locally:
+
+### 1. Clone the repo
+```
+git clone https://github.com/your-username/auth-kit-frontend.git
+cd auth-kit-frontend
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Install dependencies
+```
+npm install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 3. Setup environment variables
+- Copy .env.example → .env
+- Update API URL (Auth Kit backend):
+```
+BACKEND_URL='http://localhost'
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 4. Run dev server
+```
+npm run dev
+```
 
-## Learn More
+### 5. Open in browser
 
-To learn more about Next.js, take a look at the following resources:
+Visit: http://localhost:3000
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 📌 Roadmap
 
-## Deploy on Vercel
+Planned features and upcoming improvements:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **Social Login** → Google, GitHub integration  
+- **Two-Factor Authentication (2FA)** → TOTP apps & Email OTP
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## 🤝 Contributing  
+
+Contributions are always welcome! 🚀  
+- Open an issue for ideas, bugs, or feature requests  
+- Submit a PR with improvements or fixes  
+
+---
+
+## 📜 License  
+
+This project is licensed under the **MIT License**.  
+You’re free to use, modify, and distribute with attribution.  
