@@ -31,7 +31,6 @@ export const RouteSelect = () => {
       children: [
         { href: "/settings/security/devices", title: "Manage Devices" },
         { href: "/settings/security/recent-logins", title: "Login History" },
-        { href: "/settings/security/change-password", title: "Change password" },
       ],
     },
   ];

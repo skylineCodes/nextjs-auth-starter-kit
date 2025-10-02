@@ -26,14 +26,14 @@ const DashboardOverview = () => {
       </div>
 
       {/* Components grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-[40%_59%] gap-4 mb-4">
+      {/* <div className="grid grid-cols-1 lg:grid-cols-[40%_59%] gap-4 mb-4">
         <div className="w-full">
           <TopComponents />
         </div>
         <div className="w-full">
           <SearchQueryDataTable />
         </div>
-      </div>
+      </div> */}
     </div>
   )
 }

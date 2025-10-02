@@ -37,7 +37,9 @@ Built with **Next.js, TailwindCSS, and ShadCN UI,** it demonstrates secure pract
 
 ## 🛡️ Session + JWT Auth
 
-![Session and JWT Auth Screenshot](./screenshots/session-auth.png)
+![Session and JWT Auth Screenshot](https://firebasestorage.googleapis.com/v0/b/mizright-3949d.appspot.com/o/images%2Fjwt-auth-header.png?alt=media&token=e5130004-2685-4b5b-96f5-076336150297)
+
+![](https://firebasestorage.googleapis.com/v0/b/mizright-3949d.appspot.com/o/images%2Fsession-cookie.png?alt=media&token=ec940a46-78b2-485b-90ee-ea5d5fa2d8ba)
 
 Authentication is powered by **JWTs (JSON Web Tokens)** and a **refresh token strategy** to ensure both security and usability.
 
@@ -56,7 +58,7 @@ Authentication is powered by **JWTs (JSON Web Tokens)** and a **refresh token st
 
 ## 👀 Login Tracking + Anomaly Detection
 
-![Recent Login Activity Screenshot](./screenshots/recent-logins.png)
+![Recent Login Activity Screenshot](https://firebasestorage.googleapis.com/v0/b/mizright-3949d.appspot.com/o/images%2Frecent-logins.png?alt=media&token=e9528db7-0e2a-488b-9046-2f24c3241f41)
 
 Modern apps don’t just authenticate — they **track login behavior** to spot unusual activity and keep accounts safe.  
 This module demonstrates how recent logins can be surfaced to the user and how anomalies can be flagged.
@@ -82,7 +84,7 @@ This module demonstrates how recent logins can be surfaced to the user and how a
 
 ## 💻 Multi-Device Session Management
 
-![Manage Devices Screenshot](./screenshots/manage-devices.png)
+![Manage Devices Screenshot](https://firebasestorage.googleapis.com/v0/b/mizright-3949d.appspot.com/o/images%2Fmanage-device.png?alt=media&token=d522aad7-823a-424a-854f-59750c0dc273)
 
 In real-world apps, users often log in across multiple devices — desktop, mobile, and tablets.  
 This feature allows users to **see all active sessions** tied to their account and **take control** by revoking access when needed.
@@ -106,7 +108,11 @@ This feature allows users to **see all active sessions** tied to their account a
 
 ## 🔄 Forgot Password Flow
 
-![Forgot Password Screenshot](./screenshots/forgot-password.png)
+![Forgot Password Screenshot](https://firebasestorage.googleapis.com/v0/b/mizright-3949d.appspot.com/o/images%2Fforgot-password.png?alt=media&token=196d28a5-2f1d-426d-a038-18e8c5a5a870)
+
+![](https://firebasestorage.googleapis.com/v0/b/mizright-3949d.appspot.com/o/images%2Freset-password.png?alt=media&token=0559cde2-1d25-4e7f-96c5-1a583847d00e)
+
+![](https://firebasestorage.googleapis.com/v0/b/mizright-3949d.appspot.com/o/images%2Ftoo-many-attempt.png?alt=media&token=eec8b281-db55-4bc3-8104-32c4baba75ec)
 
 Password recovery is a **core feature** of any authentication system.  
 This flow ensures users can safely reset their credentials without compromising security.
@@ -133,7 +139,7 @@ This flow ensures users can safely reset their credentials without compromising 
 
 ## ♻️ Refresh Token Strategy
 
-![Refresh Token Flow Screenshot](./screenshots/refresh-token.png)
+![Refresh Token Flow Screenshot](https://firebasestorage.googleapis.com/v0/b/mizright-3949d.appspot.com/o/images%2Frefresh-token.png?alt=media&token=9855ceff-0651-431f-9f60-68e88c4d0d9a)
 
 To provide a seamless experience, this project implements a **refresh token strategy**.  
 It ensures users stay logged in without frequent interruptions while still maintaining strong security practices.
@@ -157,7 +163,7 @@ It ensures users stay logged in without frequent interruptions while still maint
 
 ## 🔁 API Proxy Routes
 
-![API Proxy Routes Screenshot](./screenshots/api-proxy.png)
+![API Proxy Routes Screenshot](https://firebasestorage.googleapis.com/v0/b/mizright-3949d.appspot.com/o/images%2Fapi-proxy.png?alt=media&token=d82771c2-dab7-4593-8691-81313efa6089)
 
 Instead of calling the backend API directly from the frontend, all authentication-related requests are routed through **Next.js API routes**.  
 This adds an extra layer of security and flexibility when handling sensitive operations.
@@ -178,8 +184,6 @@ This adds an extra layer of security and flexibility when handling sensitive ope
 ---
 
 ## ⚡ Next.js Middleware for Route Protection
-
-![Route Protection Screenshot](./screenshots/route-protection.png)
 
 Protecting sensitive pages is a critical part of any authentication system.  
 This project uses **Next.js Middleware** to enforce route-level security, ensuring only authenticated users can access restricted areas.
