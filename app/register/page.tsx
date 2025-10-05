@@ -143,7 +143,6 @@ const Register = () => {
                 placeholder="Enter your email address"
                 className="h-12 w-full"
                 {...register("email")}
-                onChange={(e) => setPasswordValue(e.target.value)}
               />
               {errors.email ? (
                 <p className="text-red-600 text-sm">{errors.email.message}</p>
