@@ -4,6 +4,10 @@
 A production-ready **frontend integration for authentication flows**.
 Built with **Next.js, TailwindCSS, and ShadCN UI,** it demonstrates secure practices like JWT sessions, refresh tokens, device management, and anomaly detection — the features you’d expect in a modern SaaS platform.
 
+## 🎥 Demo Video
+
+[![Watch the Demo](https://img.youtube.com/vi/XJ6jzP9O5Bo/maxresdefault.jpg)](https://www.youtube.com/watch?v=XJ6jzP9O5Bo)
+
 ## 🚀 Features
 
 ### 🔑 Sign Up Page
